@@ -4,8 +4,13 @@
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "http://localhost:8096",
+      "commandLineArgs": "--webdir /home/tricky/Projects/jellyfin-web/dist",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+          "JELLYFIN_CONFIG_DIR": "/home/tricky/Projects/jellyfin/database/jellyfin-config/config",
+          "JELLYFIN_DATA_DIR": "/home/tricky/Projects/jellyfin/database/jellyfin-config",
+          "JELLYFIN_CACHE_DIR": "/home/tricky/Projects/jellyfin/database/jellyfin-cache",
+          "JELLYFIN_LOG_DIR": "/home/tricky/Projects/jellyfin/database/jellyfin-logs"
       }
     },
     "Jellyfin.Server (nowebclient)": {

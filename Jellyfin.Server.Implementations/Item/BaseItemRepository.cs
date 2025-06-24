@@ -358,29 +358,27 @@ public sealed class BaseItemRepository
         // this results in "duplicate" responses for queries that try to lookup individual series or multiple versions but
         // for that case the invoker has to run a DistinctBy(e => e.PresentationUniqueKey) on their own
 
-        // var enableGroupByPresentationUniqueKey = EnableGroupByPresentationUniqueKey(filter);
-        // if (enableGroupByPresentationUniqueKey && filter.GroupBySeriesPresentationUniqueKey)
-        // {
-        //     dbQuery = ApplyOrder(dbQuery, filter);
-        //     dbQuery = dbQuery.GroupBy(e => new { e.PresentationUniqueKey, e.SeriesPresentationUniqueKey }).Select(e => e.First());
-        // }
-        // else if (enableGroupByPresentationUniqueKey)
-        // {
-        //     dbQuery = ApplyOrder(dbQuery, filter);
-        //     dbQuery = dbQuery.GroupBy(e => e.PresentationUniqueKey).Select(e => e.First());
-        // }
-        // else if (filter.GroupBySeriesPresentationUniqueKey)
-        // {
-        //     dbQuery = ApplyOrder(dbQuery, filter);
-        //     dbQuery = dbQuery.GroupBy(e => e.SeriesPresentationUniqueKey).Select(e => e.First());
-        // }
-        // else
-        // {
-        //     dbQuery = dbQuery.Distinct();
-        //     dbQuery = ApplyOrder(dbQuery, filter);
-        // }
-        dbQuery = dbQuery.Distinct();
-        dbQuery = ApplyOrder(dbQuery, filter);
+        var enableGroupByPresentationUniqueKey = EnableGroupByPresentationUniqueKey(filter);
+        if (enableGroupByPresentationUniqueKey && filter.GroupBySeriesPresentationUniqueKey)
+        {
+            dbQuery = ApplyOrder(dbQuery, filter);
+            dbQuery = dbQuery.GroupBy(e => new { e.PresentationUniqueKey, e.SeriesPresentationUniqueKey }).Select(e => e.First());
+        }
+        else if (enableGroupByPresentationUniqueKey)
+        {
+            dbQuery = ApplyOrder(dbQuery, filter);
+            dbQuery = dbQuery.GroupBy(e => e.PresentationUniqueKey).Select(e => e.First());
+        }
+        else if (filter.GroupBySeriesPresentationUniqueKey)
+        {
+            dbQuery = ApplyOrder(dbQuery, filter);
+            dbQuery = dbQuery.GroupBy(e => e.SeriesPresentationUniqueKey).Select(e => e.First());
+        }
+        else
+        {
+            dbQuery = dbQuery.Distinct();
+            dbQuery = ApplyOrder(dbQuery, filter);
+        }
 
         return dbQuery;
     }
